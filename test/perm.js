@@ -28,5 +28,4 @@ test('async root perm', function (t) {
         if (err) t.fail(err);
         t.end();
     });
-    t.end();
 });
