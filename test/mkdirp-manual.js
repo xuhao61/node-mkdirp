@@ -62,6 +62,26 @@ t.test('mkdirpManual / just calls implementation', t => {
   t.end()
 })
 
+t.test('read-only file system, still succeed if dir exists', t => {
+  const dir = t.testdir({ foo: {} })
+  const opt = {
+    stat,
+    statAsync,
+    statSync,
+    mkdir,
+    mkdirAsync: () => Promise.reject(Object.assign(new Error('EROFS'), {
+      code: 'EROFS',
+    })),
+    mkdirSync: () => {
+      throw Object.assign(new Error('EROFS'), {
+        code: 'EROFS',
+      })
+    },
+  }
+  t.equal(mkdirpManualSync(`${dir}/foo`, opt), undefined)
+  return mkdirpManual(`${dir}/foo`, opt).then(made => t.equal(made, undefined))
+})
+
 t.test('recurse and return first dir made', t => {
   const dir = t.testdir()
   const opt = {
