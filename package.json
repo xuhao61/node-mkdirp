@@ -1,7 +1,7 @@
 {
   "name": "mkdirp",
   "description": "Recursively mkdir, like `mkdir -p`",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "keywords": [
     "mkdir",
