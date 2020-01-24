@@ -181,7 +181,7 @@ There are a few to choose from!  Use the one that suits your needs best :D
 - You need (or at least, are ok with) a CLI.
 - You need to override the `fs` methods in use.
 
-## use [`make-dir](http://npm.im/make-dir) if:
+## use [`make-dir`](http://npm.im/make-dir) if:
 
 - You do not need to know the first dir created (and wish to save a few
   `stat` calls when using the native implementation for this reason).
