@@ -1,7 +1,6 @@
 const t = require('tap')
 const optsArg = require('../lib/opts-arg.js')
-const umask = process.umask()
-const mode = 0o777 & (~umask)
+const mode = 0o777
 const fs = require('fs')
 
 const defFs = {
