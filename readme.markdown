@@ -48,8 +48,7 @@ Create a new directory and any necessary subdirectories at `dir` with octal
 permission string `opts.mode`. If `opts` is a string or number, it will be
 treated as the `opts.mode`.
 
-If `opts.mode` isn't specified, it defaults to `0o777 &
-(~process.umask())`.
+If `opts.mode` isn't specified, it defaults to `0o777`.
 
 Promise resolves to first directory `made` that had to be created, or
 `undefined` if everything already exists.  Promise rejects if any errors
@@ -71,8 +70,7 @@ Synchronously create a new directory and any necessary subdirectories at
 `dir` with octal permission string `opts.mode`. If `opts` is a string or
 number, it will be treated as the `opts.mode`.
 
-If `opts.mode` isn't specified, it defaults to `0o777 &
-(~process.umask())`.
+If `opts.mode` isn't specified, it defaults to `0o777`.
 
 Returns the first directory that had to be created, or undefined if
 everything already exists.
