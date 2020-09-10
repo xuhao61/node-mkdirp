@@ -1,4 +1,9 @@
 const t = require('tap')
+// node before 10.13 didn't native recursive mkdir
+if (/^v([0-8]\.|10.([0-9]\.|10\.|11\.([0-9]|1[01])$))/.test(process.version)) {
+  t.plan(0, 'no native recursive mkdirp in this node version')
+  process.exit(0)
+}
 const {mkdir, mkdirSync} = require('fs')
 const {useNative, useNativeSync} = require('../lib/use-native.js')
 

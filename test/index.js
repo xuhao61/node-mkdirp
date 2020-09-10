@@ -1,13 +1,18 @@
 const t = require('tap')
 const mkdirp = require('../')
 
+// node before 10.13 didn't native recursive mkdir
+const doNative = !/^v([0-8]\.|10.([0-9]\.|10\.|11\.([0-9]|1[01])$))/.test(process.version)
+
 t.test('module shape', t => {
   t.isa(mkdirp, Function)
   t.isa(mkdirp.sync, Function)
   t.isa(mkdirp.manual, Function)
   t.isa(mkdirp.manualSync, Function)
-  t.isa(mkdirp.native, Function)
-  t.isa(mkdirp.nativeSync, Function)
+  if (doNative) {
+    t.isa(mkdirp.native, Function)
+    t.isa(mkdirp.nativeSync, Function)
+  }
   t.end()
 })
 
@@ -23,9 +28,11 @@ t.test('basic making of dirs should work', t => {
   check(`${dir}/a/manual-sync`)
   t.equal(mkdirp.manualSync(`${dir}/a/manual-sync`), undefined)
 
-  t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), `${dir}/a/native-sync`)
-  check(`${dir}/a/native-sync`)
-  t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), undefined)
+  if (doNative) {
+    t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), `${dir}/a/native-sync`)
+    check(`${dir}/a/native-sync`)
+    t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), undefined)
+  }
 
   // override to force the manual option
   const myMkdir = (path, opts, cb) => mkdir(path, opts, cb)
@@ -38,23 +45,23 @@ t.test('basic making of dirs should work', t => {
   return Promise.all([
     mkdirp(`${dir}/a/async`),
     mkdirp.manual(`${dir}/a/manual-async`),
-    mkdirp.native(`${dir}/a/native-async`),
+    doNative && mkdirp.native(`${dir}/a/native-async`),
     mkdirp(`${dir}/a/custom-async`, opts),
   ]).then(made => {
     t.strictSame(made, [
       `${dir}/a/async`,
       `${dir}/a/manual-async`,
-      `${dir}/a/native-async`,
+      doNative && `${dir}/a/native-async`,
       `${dir}/a/custom-async`,
     ])
     check(`${dir}/a/async`)
     check(`${dir}/a/manual-async`)
-    check(`${dir}/a/native-async`)
+    doNative && check(`${dir}/a/native-async`)
     check(`${dir}/a/custom-async`)
     return Promise.all([
       mkdirp(`${dir}/a/async`),
       mkdirp.manual(`${dir}/a/manual-async`),
-      mkdirp.native(`${dir}/a/native-async`),
+      doNative ? mkdirp.native(`${dir}/a/native-async`) : undefined,
       mkdirp(`${dir}/a/custom-async`, opts),
     ])
   }).then(made => t.strictSame(made, [undefined, undefined, undefined, undefined]))
