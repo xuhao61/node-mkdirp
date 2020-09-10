@@ -1,7 +1,7 @@
 # ignore most things, include some others
 /*
 /.*
-
+!.github
 !bin/
 !lib/
 !docs/
