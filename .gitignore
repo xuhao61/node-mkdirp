@@ -18,3 +18,5 @@
 !.travis.yml
 !.gitignore
 !.gitattributes
+!/tsconfig*.json
+!/fixup.sh
