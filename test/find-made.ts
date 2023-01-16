@@ -17,7 +17,7 @@ const statSync = (path: string) => {
   }
 }
 
-const { findMade, findMadeSync } = t.mock('../dist/cjs/find-made.js', {
+const { findMade, findMadeSync } = t.mock('../dist/cjs/src/find-made.js', {
   path: posix,
 })
 

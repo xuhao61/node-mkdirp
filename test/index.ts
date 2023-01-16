@@ -1,7 +1,7 @@
 import { mkdir, mkdirSync, statSync } from 'fs'
 import t from 'tap'
-import mkdirp from '../dist/cjs/index.js'
-import { MkdirpOptions, MkdirpOptionsResolved } from '../dist/cjs/opts-arg.js'
+import mkdirp from '../dist/cjs/src/index.js'
+import { MkdirpOptions, MkdirpOptionsResolved } from '../dist/cjs/src/opts-arg.js'
 
 // node before 10.13 didn't native recursive mkdir
 const doNative = !/^v([0-8]\.|10.([0-9]\.|10\.|11\.([0-9]|1[01])$))/.test(

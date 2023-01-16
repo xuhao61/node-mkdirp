@@ -7,53 +7,42 @@
 'use strict'
 exports[`test/cmd.ts TAP -h --help prints usage > --help output 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
+  "stderr": "",
+  "stdout": String(
     
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
+    usage: mkdirp [DIR1,DIR2..] {OPTIONS}
     
-    Node.js v19.4.0
+      Create each supplied directory including any necessary parent directories
+      that don't yet exist.
+    
+      If the directory already exists, do nothing.
+    
+    OPTIONS are:
+    
+      -m<mode>       If a directory needs to be created, set the mode as an octal
+      --mode=<mode>  permission string.
+    
+      -v --version   Print the mkdirp version number
+    
+      -h --help      Print this helpful banner
+    
+      -p --print     Print the first directories created for each path provided
+    
+      --manual       Use manual implementation, even if native is available
+    
     
   ),
-  "stdout": "",
 }
 `
 
 exports[`test/cmd.ts TAP -v --version prints version > --version output 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
-    
-  ),
-  "stdout": "",
+  "stderr": "",
+  "stdout": "4.2.0-69.lol\\n",
 }
 `
 
@@ -62,45 +51,15 @@ Array [
   Object {
     "code": 1,
     "signal": null,
-    "stderr": String(
-      /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-      import t from 'tap'
-      ^^^^^^
-      
-      SyntaxError: Cannot use import statement outside a module
-          at internalCompileFunction (node:internal/vm:73:18)
-          at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-          at Module._compile (node:internal/modules/cjs/loader:1203:27)
-          at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-          at Module.load (node:internal/modules/cjs/loader:1096:32)
-          at Module._load (node:internal/modules/cjs/loader:935:12)
-          at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-          at node:internal/main/run_main_module:23:47
-      
-      Node.js v19.4.0
-      
-    ),
+    "stderr": "nope\\n",
     "stdout": "",
   },
   Object {
     "code": 1,
     "signal": null,
     "stderr": String(
-      /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-      import t from 'tap'
-      ^^^^^^
-      
-      SyntaxError: Cannot use import statement outside a module
-          at internalCompileFunction (node:internal/vm:73:18)
-          at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-          at Module._compile (node:internal/modules/cjs/loader:1203:27)
-          at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-          at Module.load (node:internal/modules/cjs/loader:1096:32)
-          at Module._load (node:internal/modules/cjs/loader:935:12)
-          at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-          at node:internal/main/run_main_module:23:47
-      
-      Node.js v19.4.0
+      fail
+        code: EFAIL
       
     ),
     "stdout": "",
@@ -113,21 +72,8 @@ Object {
   "code": 1,
   "signal": null,
   "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
+    invalid mode argument: --mode=XYZ
+    Must be an octal number.
     
   ),
   "stdout": "",
@@ -136,102 +82,61 @@ Object {
 
 exports[`test/cmd.ts TAP make dir named --help > expect resolving Promise 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
-    
-  ),
-  "stdout": "",
+  "stderr": "",
+  "stdout": "--help 0\\n",
 }
 `
 
 exports[`test/cmd.ts TAP making dirs > expect resolving Promise 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
-    
-  ),
+  "stderr": "",
   "stdout": "",
 }
 `
 
 exports[`test/cmd.ts TAP manual > expect resolving Promise 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
+  "stderr": "",
+  "stdout": String(
+    MANUAL a 0
+    MANUAL b/c/d 0
     
   ),
-  "stdout": "",
 }
 `
 
 exports[`test/cmd.ts TAP no dirs -> stderr usage > expect resolving Promise 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
   "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
     
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
+    usage: mkdirp [DIR1,DIR2..] {OPTIONS}
     
-    Node.js v19.4.0
+      Create each supplied directory including any necessary parent directories
+      that don't yet exist.
+    
+      If the directory already exists, do nothing.
+    
+    OPTIONS are:
+    
+      -m<mode>       If a directory needs to be created, set the mode as an octal
+      --mode=<mode>  permission string.
+    
+      -v --version   Print the mkdirp version number
+    
+      -h --help      Print this helpful banner
+    
+      -p --print     Print the first directories created for each path provided
+    
+      --manual       Use manual implementation, even if native is available
+    
     
   ),
   "stdout": "",
@@ -240,52 +145,22 @@ Object {
 
 exports[`test/cmd.ts TAP noisily > expect resolving Promise 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
+  "stderr": "",
+  "stdout": String(
+    a 0
+    b/c/d 0
     
   ),
-  "stdout": "",
 }
 `
 
 exports[`test/cmd.ts TAP print modes > expect resolving Promise 1`] = `
 Object {
-  "code": 1,
+  "code": 0,
   "signal": null,
-  "stderr": String(
-    /Users/isaacs/dev/isaacs/mkdirp/test/cmd.ts:2
-    import t from 'tap'
-    ^^^^^^
-    
-    SyntaxError: Cannot use import statement outside a module
-        at internalCompileFunction (node:internal/vm:73:18)
-        at wrapSafe (node:internal/modules/cjs/loader:1159:20)
-        at Module._compile (node:internal/modules/cjs/loader:1203:27)
-        at Module._extensions..js (node:internal/modules/cjs/loader:1293:10)
-        at Module.load (node:internal/modules/cjs/loader:1096:32)
-        at Module._load (node:internal/modules/cjs/loader:935:12)
-        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:84:12)
-        at node:internal/main/run_main_module:23:47
-    
-    Node.js v19.4.0
-    
-  ),
-  "stdout": "",
+  "stderr": "",
+  "stdout": "a 509\\n",
 }
 `

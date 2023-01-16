@@ -8,7 +8,7 @@ const mkdirAsync = promisify(mkdir)
 import { posix as path } from 'path'
 
 const { mkdirpManual, mkdirpManualSync } = t.mock(
-  '../dist/cjs/mkdirp-manual.js',
+  '../dist/cjs/src/mkdirp-manual.js',
   {
     path,
   }

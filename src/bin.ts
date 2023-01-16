@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { MkdirpOptions } from './opts-arg.js'
+import { version } from '../package.json'
 
 const usage = () => `
 usage: mkdirp [DIR1,DIR2..] {OPTIONS}
@@ -37,7 +38,7 @@ for (const arg of process.argv.slice(2)) {
     console.log(usage())
     process.exit(0)
   } else if (arg === '-v' || arg === '--version') {
-    console.log(require('../package.json').version)
+    console.log(version)
     process.exit(0)
   } else if (arg === '-p' || arg === '--print') {
     doPrint = true

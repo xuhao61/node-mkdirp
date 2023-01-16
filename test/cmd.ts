@@ -1,6 +1,6 @@
-const cmd = require.resolve('../dist/cjs/bin.js')
+const cmd = require.resolve('../dist/cjs/src/bin.js')
 import t from 'tap'
-import { MkdirpOptions } from '../dist/cjs/opts-arg.js'
+import { MkdirpOptions } from '../src/opts-arg'
 
 import { spawn } from 'child_process'
 import { basename } from 'path'
@@ -16,19 +16,29 @@ const fakeMkdirp = (path: string, opts: MkdirpOptions) =>
 
 fakeMkdirp.manual = (path: string, opts: MkdirpOptions) =>
   fakeMkdirp(`MANUAL ${path}`, opts)
+fakeMkdirp.mkdirp = fakeMkdirp
 
 if (process.argv[2] === 'RUN') {
-  process.argv = [process.execPath, cmd, ...process.argv.slice(3)]
+  process.argv = [
+    process.execPath,
+    cmd,
+    ...process.argv.slice(3),
+  ]
   t.mock(cmd, {
-    '../': fakeMkdirp,
-    '../package.json': {
+    '../dist/cjs/src/index.js': fakeMkdirp,
+    '../dist/cjs/package.json': {
       version: '4.2.0-69.lol',
     },
   })
 } else {
   const run = (...args: string[]) =>
     new Promise(res => {
-      const proc = spawn(process.execPath, [__filename, 'RUN', ...args])
+      const proc = spawn(process.execPath, [
+        ...process.execArgv,
+        __filename,
+        'RUN',
+        ...args,
+      ])
       const out: Buffer[] = []
       const err: Buffer[] = []
       proc.stdout.on('data', c => out.push(c))

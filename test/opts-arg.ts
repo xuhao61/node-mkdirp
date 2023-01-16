@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import t from 'tap'
-import { optsArg } from '../dist/cjs/opts-arg.js'
+import { optsArg } from '../dist/cjs/src/opts-arg.js'
 const mode = 0o777
 
 const defFs = {

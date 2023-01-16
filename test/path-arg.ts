@@ -13,7 +13,7 @@ if (!process.env.__TESTING_MKDIRP_PLATFORM__) {
 
 const platform = process.env.__TESTING_MKDIRP_PLATFORM__ || process.platform
 const path = require('path').platform || require('path')
-const { pathArg } = t.mock('../dist/cjs/path-arg.js', {
+const { pathArg } = t.mock('../dist/cjs/src/path-arg.js', {
   path,
 })
 const { resolve } = path

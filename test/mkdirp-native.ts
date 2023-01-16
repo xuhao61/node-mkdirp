@@ -5,10 +5,10 @@ const statAsync = promisify(stat)
 
 import { posix as path } from 'path'
 const { mkdirpNative, mkdirpNativeSync } = t.mock(
-  '../dist/cjs/mkdirp-native.js',
+  '../dist/cjs/src/mkdirp-native.js',
   {
     // just return an indicator that it was called
-    '../dist/cjs/mkdirp-manual.js': {
+    '../dist/cjs/src/mkdirp-manual.js': {
       mkdirpManual: () => 'mkdirpManual',
       mkdirpManualSync: () => 'mkdirpManualSync',
     },

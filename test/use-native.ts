@@ -1,6 +1,6 @@
 import { mkdir, mkdirSync } from 'fs'
 import t from 'tap'
-import { useNative, useNativeSync } from '../dist/cjs/use-native.js'
+import { useNative, useNativeSync } from '../dist/cjs/src/use-native.js'
 // node before 10.13 didn't native recursive mkdir
 if (/^v([0-8]\.|10.([0-9]\.|10\.|11\.([0-9]|1[01])$))/.test(process.version)) {
   t.plan(0, 'no native recursive mkdirp in this node version')
