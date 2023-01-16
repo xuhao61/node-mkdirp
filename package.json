@@ -12,13 +12,13 @@
     "native"
   ],
   "main": "./dist/cjs/src/index-cjs.js",
-  "module": "./dist/mjs/src/index.js",
+  "module": "./dist/mjs/index.js",
   "bin": "./dist/cjs/src/bin.js",
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/mjs/src/index.js",
-        "types": "./dist/mjs/src/index.d.ts"
+        "default": "./dist/mjs/index.js",
+        "types": "./dist/mjs/index.d.ts"
       },
       "require": {
         "default": "./dist/cjs/src/index-cjs.js",
