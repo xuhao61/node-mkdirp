@@ -42,7 +42,7 @@ export const mkdirpNative = Object.assign(
     return findMade(opts, path).then((made?: string | undefined) =>
       opts
         .mkdirAsync(path, opts)
-        .then((m) => made || m)
+        .then(m => made || m)
         .catch(er => {
           const fer = er as NodeJS.ErrnoException
           if (fer?.code === 'ENOENT') {

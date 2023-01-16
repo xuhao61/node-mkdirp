@@ -20,3 +20,4 @@
 !.gitattributes
 !/tsconfig*.json
 !/fixup.sh
+!/.prettierignore

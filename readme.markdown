@@ -18,7 +18,8 @@ const { mkdirp } = require('mkdirp')
 
 // return value is a Promise resolving to the first directory created
 mkdirp('/tmp/foo/bar/baz').then(made =>
-  console.log(`made directories, starting with ${made}`))
+  console.log(`made directories, starting with ${made}`)
+)
 ```
 
 Output (where `/tmp/foo` already exists)
@@ -54,8 +55,8 @@ or number, it will be treated as the `opts.mode`.
 If `opts.mode` isn't specified, it defaults to `0o777`.
 
 Promise resolves to first directory `made` that had to be
-created, or `undefined` if everything already exists.  Promise
-rejects if any errors are encountered.  Note that, in the case of
+created, or `undefined` if everything already exists. Promise
+rejects if any errors are encountered. Note that, in the case of
 promise rejection, some directories _may_ have been created, as
 recursive directory creation is not an atomic operation.
 
@@ -89,13 +90,13 @@ providing an `fs` option that only overrides one of these.
 
 ## `mkdirp.manual`, `mkdirp.manualSync`
 
-Use the manual implementation (not the native one).  This is the
+Use the manual implementation (not the native one). This is the
 default when the native implementation is not available or the
 stat/mkdir implementation is overridden.
 
 ## `mkdirp.native`, `mkdirp.nativeSync`
 
-Use the native implementation (not the manual one).  This is the
+Use the native implementation (not the manual one). This is the
 default when the native implementation is available and
 stat/mkdir are not overridden.
 
@@ -108,7 +109,7 @@ been overridden by an option.
 ## native implementation
 
 - If the path is a root directory, then pass it to the underlying
-  implementation and return the result/error.  (In this case,
+  implementation and return the result/error. (In this case,
   it'll either succeed or fail, but we aren't actually creating
   any dirs.)
 - Walk up the path statting each directory, to find the first
@@ -120,7 +121,7 @@ been overridden by an option.
 ## manual implementation
 
 - Call underlying `fs.mkdir` implementation, with `recursive:
-  false`
+false`
 - If error:
   - If path is a root directory, raise to the caller and do not
     handle it
@@ -135,13 +136,13 @@ been overridden by an option.
 ## windows vs unix caveat
 
 On Windows file systems, attempts to create a root directory (ie,
-a drive letter or root UNC path) will fail.  If the root
-directory exists, then it will fail with `EPERM`.  If the root
+a drive letter or root UNC path) will fail. If the root
+directory exists, then it will fail with `EPERM`. If the root
 directory does not exist, then it will fail with `ENOENT`.
 
 On posix file systems, attempts to create a root directory (in
 recursive mode) will succeed silently, as it is treated like just
-another directory that already exists.  (In non-recursive mode,
+another directory that already exists. (In non-recursive mode,
 of course, it fails with `EEXIST`.)
 
 In order to preserve this system-specific behavior (and because
@@ -164,7 +165,7 @@ is encountered.
 
 # choosing a recursive mkdir implementation
 
-There are a few to choose from!  Use the one that suits your
+There are a few to choose from! Use the one that suits your
 needs best :D
 
 ## use `fs.mkdir(path, {recursive: true}, cb)` if:
@@ -216,7 +217,7 @@ needs best :D
 - You think vinyl just sounds warmer and richer for some weird
   reason.
 - You are supporting truly ancient Node.js versions, before even
-  the advent of a `Promise` language primitive.  (Please don't.
+  the advent of a `Promise` language primitive. (Please don't.
   You deserve better.)
 
 # cli

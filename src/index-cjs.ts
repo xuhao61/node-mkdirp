@@ -1,3 +1,3 @@
-import mkdirp from './index.js';
+import mkdirp from './index.js'
 
-export = mkdirp;
+export = Object.assign(mkdirp, { default: mkdirp })
