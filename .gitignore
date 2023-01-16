@@ -1,9 +1,9 @@
 # ignore most things, include some others
 /*
 /.*
+!src/
 !.github
 !bin/
-!lib/
 !docs/
 !package.json
 !package-lock.json
@@ -18,5 +18,3 @@
 !.travis.yml
 !.gitignore
 !.gitattributes
-!map.js
-!index.js

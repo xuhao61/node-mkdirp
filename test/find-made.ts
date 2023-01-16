@@ -1,33 +1,33 @@
-const t = require('tap')
-const requireInject = require('require-inject')
+import t from 'tap'
 
-const {basename, posix} = require('path')
-const {promisify} = require('util')
-const fs = require('fs')
+import * as fs from 'fs'
+import { basename, posix } from 'path'
+import { promisify } from 'util'
 
-const statAsync = (path) =>
+const statAsync = (path: string) =>
   basename(path) === 'error'
     ? Promise.reject(new Error('not a real error'))
     : promisify(fs.stat)(path)
 
-const statSync = path => {
-  if (basename(path) === 'error')
+const statSync = (path: string) => {
+  if (basename(path) === 'error') {
     throw new Error('not a real error')
-  else
+  } else {
     return fs.statSync(path)
+  }
 }
 
-const {findMade, findMadeSync} = requireInject('../lib/find-made.js', {
+const { findMade, findMadeSync } = t.mock('../dist/cjs/find-made.js', {
   path: posix,
 })
 
-t.test('find what dir will be made', t => {
+t.test('find what dir will be made', async t => {
   const dir = t.testdir({
     file: 'txt',
     subdir: {},
   })
 
-  const o = {statAsync, statSync}
+  const o = { statAsync, statSync }
 
   t.equal(findMadeSync(o, `${dir}/subdir/x/y/z`), `${dir}/subdir/x`)
   t.equal(findMadeSync(o, `${dir}/subdir`), undefined)
@@ -42,12 +42,14 @@ t.test('find what dir will be made', t => {
     findMade(o, `${dir}/file`, `${dir}/file/x`),
     findMade(o, `${dir}/subdir/error`),
     findMade(o, '/', '/'),
-  ]).then(made => t.strictSame(made, [
-    `${dir}/subdir/x`,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-  ]))
+  ]).then(made =>
+    t.strictSame(made, [
+      `${dir}/subdir/x`,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+    ])
+  )
 })

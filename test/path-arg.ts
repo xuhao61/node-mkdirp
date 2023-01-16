@@ -1,8 +1,9 @@
-const t = require('tap')
+import t from 'tap'
 
 if (!process.env.__TESTING_MKDIRP_PLATFORM__) {
   const fake = process.platform === 'win32' ? 'posix' : 'win32'
-  t.spawn(process.execPath, [__filename], {
+  //@ts-ignore
+  t.spawn(process.execPath, [...process.execArgv, __filename], {
     env: {
       ...process.env,
       __TESTING_MKDIRP_PLATFORM__: fake,
@@ -12,14 +13,16 @@ if (!process.env.__TESTING_MKDIRP_PLATFORM__) {
 
 const platform = process.env.__TESTING_MKDIRP_PLATFORM__ || process.platform
 const path = require('path').platform || require('path')
-const requireInject = require('require-inject')
-const pathArg = requireInject('../lib/path-arg.js', {
+const { pathArg } = t.mock('../dist/cjs/path-arg.js', {
   path,
 })
-const {resolve} = path
+const { resolve } = path
 
 t.equal(pathArg('a/b/c'), resolve('a/b/c'))
-t.throws(() => pathArg('a\0b'), Error('path must be a string without null bytes'))
+t.throws(
+  () => pathArg('a\0b'),
+  Error('path must be a string without null bytes')
+)
 if (platform === 'win32') {
   const badPaths = [
     'c:\\a\\b:c',

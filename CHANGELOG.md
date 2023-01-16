@@ -1,5 +1,9 @@
 # Changers Lorgs!
 
+## 2.0
+
+Export hybrid module with TypeScript types.
+
 ## 1.0
 
 Full rewrite.  Essentially a brand new module.

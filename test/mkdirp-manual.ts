@@ -1,16 +1,18 @@
-const t = require('tap')
-const requireInject = require('require-inject')
-const {promisify} = require('util')
+import t from 'tap'
+import { promisify } from 'util'
 
-const {stat, statSync, mkdir, mkdirSync} = require('fs')
+import { mkdir, mkdirSync, stat, statSync } from 'fs'
 const statAsync = promisify(stat)
 const mkdirAsync = promisify(mkdir)
 
-const path = require('path').posix
-const {resolve} = path
+import { posix as path } from 'path'
 
-const {mkdirpManual, mkdirpManualSync} =
-  requireInject('../lib/mkdirp-manual.js', { path })
+const { mkdirpManual, mkdirpManualSync } = t.mock(
+  '../dist/cjs/mkdirp-manual.js',
+  {
+    path,
+  }
+)
 
 t.test('mkdirpManual / just calls implementation', t => {
   t.test('success is fine, of course', t => {
@@ -20,39 +22,40 @@ t.test('mkdirpManual / just calls implementation', t => {
       recursive: true,
     }
     t.equal(mkdirpManualSync('/', opt), 'mkdirSync impl')
-    t.equal(opt.recursive, false)
-    opt.recursive = true
-    return mkdirpManual('/', opt).then(res => {
+    //@ts-ignore
+    t.equal(opt.recursive, true)
+    return mkdirpManual('/', opt).then((res: string) => {
       t.equal(res, 'mkdirAsync impl')
-      t.equal(opt.recursive, false)
+      //@ts-ignore
+      t.equal(opt.recursive, true)
     })
   })
 
   t.test('EISDIR is expected and ignored', t => {
     const opt = {
-      mkdirAsync: () => Promise.reject(Object.assign(new Error('is dir'), { code: 'EISDIR' })),
+      mkdirAsync: () =>
+        Promise.reject(Object.assign(new Error('is dir'), { code: 'EISDIR' })),
       mkdirSync: () => {
         throw Object.assign(new Error('is dir'), { code: 'EISDIR' })
       },
-      // ensure it gets reset
       recursive: true,
     }
     t.equal(mkdirpManualSync('/', opt), undefined)
-    t.equal(opt.recursive, false)
+    t.equal(opt.recursive, true)
     opt.recursive = true
-    return mkdirpManual('/', opt).then(made => {
+    return mkdirpManual('/', opt).then((made: string) => {
       t.equal(made, undefined)
-      t.equal(opt.recursive, false)
+      t.equal(opt.recursive, true)
     })
   })
 
   t.test('other failures are failures', t => {
     const opt = {
-      mkdirAsync: () => Promise.reject(Object.assign(new Error('grolb'), { code: 'blorg' })),
+      mkdirAsync: () =>
+        Promise.reject(Object.assign(new Error('grolb'), { code: 'blorg' })),
       mkdirSync: () => {
         throw Object.assign(new Error('grolb'), { code: 'blorg' })
       },
-      // ensure it gets reset
       recursive: true,
     }
     t.throws(() => mkdirpManualSync('/', opt), { code: 'blorg' })
@@ -69,9 +72,12 @@ t.test('read-only file system, still succeed if dir exists', t => {
     statAsync,
     statSync,
     mkdir,
-    mkdirAsync: () => Promise.reject(Object.assign(new Error('EROFS'), {
-      code: 'EROFS',
-    })),
+    mkdirAsync: () =>
+      Promise.reject(
+        Object.assign(new Error('EROFS'), {
+          code: 'EROFS',
+        })
+      ),
     mkdirSync: () => {
       throw Object.assign(new Error('EROFS'), {
         code: 'EROFS',
@@ -79,7 +85,9 @@ t.test('read-only file system, still succeed if dir exists', t => {
     },
   }
   t.equal(mkdirpManualSync(`${dir}/foo`, opt), undefined)
-  return mkdirpManual(`${dir}/foo`, opt).then(made => t.equal(made, undefined))
+  return mkdirpManual(`${dir}/foo`, opt).then((made: string) =>
+    t.equal(made, undefined)
+  )
 })
 
 t.test('recurse and return first dir made', t => {
@@ -97,15 +105,18 @@ t.test('recurse and return first dir made', t => {
   t.equal(statSync(`${dir}/sync/a/b`).isDirectory(), true, 'made dir')
   t.equal(mkdirpManualSync(`${dir}/sync/a/b`, opt), undefined)
 
-  return mkdirpManual(`${dir}/async/a/b`, opt).then(made => {
-    t.equal(made, `${dir}/async`)
-    return mkdirpManual(`${dir}/async/a/b`, opt)
-  }).then(made => t.equal(made, undefined))
+  return mkdirpManual(`${dir}/async/a/b`, opt)
+    .then((made: string) => {
+      t.equal(made, `${dir}/async`)
+      return mkdirpManual(`${dir}/async/a/b`, opt)
+    })
+    .then((made: string | undefined) => t.equal(made, undefined))
 })
 
 t.test('unknown failure types are failures', t => {
   const opt = {
-    mkdirAsync: () => Promise.reject(Object.assign(new Error('grolb'), { code: 'blorg' })),
+    mkdirAsync: () =>
+      Promise.reject(Object.assign(new Error('grolb'), { code: 'blorg' })),
     mkdirSync: () => {
       throw Object.assign(new Error('grolb'), { code: 'blorg' })
     },
@@ -136,14 +147,11 @@ t.test('try to overwrite a file, then fail to stat it', t => {
   const file = `${dir}/file`
   const er = Object.assign(new Error('nope'), { code: 'grob' })
   const opt = {
-    statAsync: path => path === file
-      ? Promise.reject(er)
-      : statAsync(path),
-    statSync: path => {
-      if (path === file)
-        throw er
-      else
-        return statSync(path)
+    statAsync: (path: string) =>
+      path === file ? Promise.reject(er) : statAsync(path),
+    statSync: (path: string) => {
+      if (path === file) throw er
+      else return statSync(path)
     },
     mkdirAsync,
     mkdirSync,
