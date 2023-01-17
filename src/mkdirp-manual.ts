@@ -16,7 +16,7 @@ export const mkdirpManualSync = (
       // swallowed by recursive implementation on posix systems
       // any other error is a failure
       const fer = er as NodeJS.ErrnoException
-      if (fer?.code !== 'EISDIR') {
+      if (fer && fer.code !== 'EISDIR') {
         throw er
       }
       return
@@ -28,9 +28,12 @@ export const mkdirpManualSync = (
     return made || path
   } catch (er) {
     const fer = er as NodeJS.ErrnoException
-    if (fer?.code === 'ENOENT')
+    if (fer && fer.code === 'ENOENT') {
       return mkdirpManualSync(path, opts, mkdirpManualSync(parent, opts, made))
-    if (fer?.code !== 'EEXIST' && fer?.code !== 'EROFS') throw er
+    }
+    if (fer && fer.code !== 'EEXIST' && fer && fer.code !== 'EROFS') {
+      throw er
+    }
     try {
       if (!opts.statSync(path).isDirectory()) throw er
     } catch (_) {
@@ -53,7 +56,7 @@ export const mkdirpManual = Object.assign(
         // swallowed by recursive implementation on posix systems
         // any other error is a failure
         const fer = er as NodeJS.ErrnoException
-        if (fer?.code !== 'EISDIR') {
+        if (fer && fer.code !== 'EISDIR') {
           throw er
         }
       })
@@ -63,11 +66,14 @@ export const mkdirpManual = Object.assign(
       () => made || path,
       async er => {
         const fer = er as NodeJS.ErrnoException
-        if (fer?.code === 'ENOENT')
+        if (fer && fer.code === 'ENOENT') {
           return mkdirpManual(parent, opts).then(
             (made?: string | undefined | void) => mkdirpManual(path, opts, made)
           )
-        if (fer?.code !== 'EEXIST' && fer?.code !== 'EROFS') throw er
+        }
+        if (fer && fer.code !== 'EEXIST' && fer.code !== 'EROFS') {
+          throw er
+        }
         return opts.statAsync(path).then(
           st => {
             if (st.isDirectory()) {

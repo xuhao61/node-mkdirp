@@ -15,7 +15,7 @@ export const findMade = async (
     st => (st.isDirectory() ? path : undefined), // will fail later
     er => {
       const fer = er as NodeJS.ErrnoException
-      return fer?.code === 'ENOENT'
+      return fer && fer.code === 'ENOENT'
         ? findMade(opts, dirname(parent), parent)
         : undefined
     }
@@ -35,7 +35,7 @@ export const findMadeSync = (
     return opts.statSync(parent).isDirectory() ? path : undefined
   } catch (er) {
     const fer = er as NodeJS.ErrnoException
-    return fer?.code === 'ENOENT'
+    return fer && fer.code === 'ENOENT'
       ? findMadeSync(opts, dirname(parent), parent)
       : undefined
   }

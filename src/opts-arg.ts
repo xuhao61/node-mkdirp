@@ -75,8 +75,9 @@ export const optsArg = (opts?: MkdirpOptions): MkdirpOptionsResolved => {
   }
 
   const resolved = opts as MkdirpOptionsResolved
+  const optsFs = opts.fs || {}
 
-  opts.mkdir = opts.mkdir || opts.fs?.mkdir || mkdir
+  opts.mkdir = opts.mkdir || optsFs.mkdir || mkdir
 
   opts.mkdirAsync = opts.mkdirAsync
     ? opts.mkdirAsync
@@ -91,7 +92,7 @@ export const optsArg = (opts?: MkdirpOptions): MkdirpOptionsResolved => {
         )
       }
 
-  opts.stat = opts.stat || opts.fs?.stat || stat
+  opts.stat = opts.stat || optsFs.stat || stat
   opts.statAsync = opts.statAsync
     ? opts.statAsync
     : async (path: string) =>
@@ -99,8 +100,8 @@ export const optsArg = (opts?: MkdirpOptions): MkdirpOptionsResolved => {
           resolved.stat(path, (err, stats) => (err ? rej(err) : res(stats)))
         )
 
-  opts.statSync = opts.statSync || opts.fs?.statSync || statSync
-  opts.mkdirSync = opts.mkdirSync || opts.fs?.mkdirSync || mkdirSync
+  opts.statSync = opts.statSync || optsFs.statSync || statSync
+  opts.mkdirSync = opts.mkdirSync || optsFs.mkdirSync || mkdirSync
 
   return resolved
 }
