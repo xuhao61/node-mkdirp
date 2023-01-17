@@ -1,5 +1,11 @@
 # Changers Lorgs!
 
+## 2.1
+
+Export CommonJS module without a `.default` dangly wart.  (A
+synthetic `.default` has been added just in case anyone is already
+relying on that from v2.0.)
+
 ## 2.0
 
 Export hybrid module with TypeScript types.
