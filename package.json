@@ -1,7 +1,7 @@
 {
   "name": "mkdirp",
   "description": "Recursively mkdir, like `mkdir -p`",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "keywords": [
     "mkdir",
     "directory",
