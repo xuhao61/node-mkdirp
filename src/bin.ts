@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { MkdirpOptions } from './opts-arg.js'
 import { version } from '../package.json'
+import { MkdirpOptions } from './opts-arg.js'
 
 const usage = () => `
 usage: mkdirp [DIR1,DIR2..] {OPTIONS}
@@ -43,11 +43,15 @@ for (const arg of process.argv.slice(2)) {
   } else if (arg === '-p' || arg === '--print') {
     doPrint = true
   } else if (/^-m/.test(arg) || /^--mode=/.test(arg)) {
+    // these don't get covered in CI, but work locally
+    // weird because the tests below show as passing in the output.
+    /* c8 ignore start */
     const mode = parseInt(arg.replace(/^(-m|--mode=)/, ''), 8)
     if (isNaN(mode)) {
       console.error(`invalid mode argument: ${arg}\nMust be an octal number.`)
       process.exit(1)
     }
+    /* c8 ignore stop */
     opts.mode = mode
   } else dirs.push(arg)
 }
@@ -58,6 +62,8 @@ if (dirs.length === 0) {
   console.error(usage())
 }
 
+// these don't get covered in CI, but work locally
+/* c8 ignore start */
 Promise.all(dirs.map(dir => impl(dir, opts)))
   .then(made => (doPrint ? made.forEach(m => m && console.log(m)) : null))
   .catch(er => {
@@ -65,3 +71,4 @@ Promise.all(dirs.map(dir => impl(dir, opts)))
     if (er.code) console.error('  code: ' + er.code)
     process.exit(1)
   })
+/* c8 ignore stop */
