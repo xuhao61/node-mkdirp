@@ -6,6 +6,8 @@ import {
   MkdirpOptionsResolved,
 } from '../dist/cjs/src/opts-arg.js'
 
+const s = (s: any) => typeof s !== 'string' ? s : s.replace(/\\/g, '/')
+
 // node before 10.13 didn't native recursive mkdir
 const doNative = !/^v([0-8]\.|10.([0-9]\.|10\.|11\.([0-9]|1[01])$))/.test(
   process.version
@@ -26,16 +28,16 @@ t.test('module shape', t => {
 t.test('basic making of dirs should work', async t => {
   const dir = t.testdir({ a: {} })
   const check = (d: string) => t.ok(statSync(d).isDirectory())
-  t.equal(mkdirp.sync(`${dir}/a/sync`), `${dir}/a/sync`)
+  t.equal(s(mkdirp.sync(`${dir}/a/sync`)), `${dir}/a/sync`)
   check(`${dir}/a/sync`)
   t.equal(mkdirp.sync(`${dir}/a/sync`), undefined)
 
-  t.equal(mkdirp.manualSync(`${dir}/a/manual-sync`), `${dir}/a/manual-sync`)
+  t.equal(s(mkdirp.manualSync(`${dir}/a/manual-sync`)), `${dir}/a/manual-sync`)
   check(`${dir}/a/manual-sync`)
-  t.equal(mkdirp.manualSync(`${dir}/a/manual-sync`), undefined)
+  t.equal(s(mkdirp.manualSync(`${dir}/a/manual-sync`)), undefined)
 
   if (doNative) {
-    t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), `${dir}/a/native-sync`)
+    t.equal(s(mkdirp.nativeSync(`${dir}/a/native-sync`)), `${dir}/a/native-sync`)
     check(`${dir}/a/native-sync`)
     t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), undefined)
   }
@@ -51,10 +53,10 @@ t.test('basic making of dirs should work', async t => {
     mkdirSync(path, opts)
   const opts = { mkdir: myMkdir, mkdirSync: myMkdirSync }
   //@ts-ignore
-  t.equal(mkdirp.sync(`${dir}/a/custom-sync`, opts), `${dir}/a/custom-sync`)
+  t.equal(s(mkdirp.sync(`${dir}/a/custom-sync`, opts)), `${dir}/a/custom-sync`)
   check(`${dir}/a/custom-sync`)
   //@ts-ignore
-  t.equal(mkdirp.sync(`${dir}/a/custom-sync`, opts), undefined)
+  t.equal(s(mkdirp.sync(`${dir}/a/custom-sync`, opts)), undefined)
 
   return Promise.all([
     mkdirp(`${dir}/a/async`),
@@ -64,7 +66,7 @@ t.test('basic making of dirs should work', async t => {
     mkdirp(`${dir}/a/custom-async`, opts),
   ])
     .then(made => {
-      t.strictSame(made, [
+      t.strictSame(made.map(m => s(m)), [
         `${dir}/a/async`,
         `${dir}/a/manual-async`,
         doNative && `${dir}/a/native-async`,
