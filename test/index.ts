@@ -6,7 +6,7 @@ import {
   MkdirpOptionsResolved,
 } from '../dist/cjs/src/opts-arg.js'
 
-const s = (s: any) => typeof s !== 'string' ? s : s.replace(/\\/g, '/')
+const s = (s: any) => (typeof s !== 'string' ? s : s.replace(/\\/g, '/'))
 
 // node before 10.13 didn't native recursive mkdir
 const doNative = !/^v([0-8]\.|10.([0-9]\.|10\.|11\.([0-9]|1[01])$))/.test(
@@ -28,16 +28,22 @@ t.test('module shape', t => {
 t.test('basic making of dirs should work', async t => {
   const dir = t.testdir({ a: {} })
   const check = (d: string) => t.ok(statSync(d).isDirectory())
-  t.equal(s(mkdirp.sync(`${dir}/a/sync`)), `${dir}/a/sync`)
+  t.equal(s(mkdirp.sync(`${dir}/a/sync`)), s(`${dir}/a/sync`))
   check(`${dir}/a/sync`)
   t.equal(mkdirp.sync(`${dir}/a/sync`), undefined)
 
-  t.equal(s(mkdirp.manualSync(`${dir}/a/manual-sync`)), `${dir}/a/manual-sync`)
+  t.equal(
+    s(mkdirp.manualSync(`${dir}/a/manual-sync`)),
+    s(`${dir}/a/manual-sync`)
+  )
   check(`${dir}/a/manual-sync`)
   t.equal(s(mkdirp.manualSync(`${dir}/a/manual-sync`)), undefined)
 
   if (doNative) {
-    t.equal(s(mkdirp.nativeSync(`${dir}/a/native-sync`)), `${dir}/a/native-sync`)
+    t.equal(
+      s(mkdirp.nativeSync(`${dir}/a/native-sync`)),
+      s(`${dir}/a/native-sync`)
+    )
     check(`${dir}/a/native-sync`)
     t.equal(mkdirp.nativeSync(`${dir}/a/native-sync`), undefined)
   }
@@ -66,12 +72,15 @@ t.test('basic making of dirs should work', async t => {
     mkdirp(`${dir}/a/custom-async`, opts),
   ])
     .then(made => {
-      t.strictSame(made.map(m => s(m)), [
-        `${dir}/a/async`,
-        `${dir}/a/manual-async`,
-        doNative && `${dir}/a/native-async`,
-        `${dir}/a/custom-async`,
-      ])
+      t.strictSame(
+        made.map(m => s(m)),
+        [
+          `${dir}/a/async`,
+          `${dir}/a/manual-async`,
+          doNative && `${dir}/a/native-async`,
+          `${dir}/a/custom-async`,
+        ].map(m => s(m))
+      )
       check(`${dir}/a/async`)
       check(`${dir}/a/manual-async`)
       doNative && check(`${dir}/a/native-async`)
