@@ -37,4 +37,4 @@ jobs:
 
       # Run the tests
     - name: Run Tap tests
-      run: npm test
+      run: npm test -- -t0 -c
