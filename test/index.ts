@@ -59,7 +59,7 @@ t.test('basic making of dirs should work', async t => {
     mkdirSync(path, opts)
   const opts = { mkdir: myMkdir, mkdirSync: myMkdirSync }
   //@ts-ignore
-  t.equal(s(mkdirp.sync(`${dir}/a/custom-sync`, opts)), `${dir}/a/custom-sync`)
+  t.equal(s(mkdirp.sync(`${dir}/a/custom-sync`, opts)), s(`${dir}/a/custom-sync`))
   check(`${dir}/a/custom-sync`)
   //@ts-ignore
   t.equal(s(mkdirp.sync(`${dir}/a/custom-sync`, opts)), undefined)
