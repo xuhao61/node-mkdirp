@@ -30,10 +30,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        cache: npm
 
       # Run the installer script
     - name: Install dependencies
-      run: npm install
+      run: npm ci
 
       # Run the tests
     - name: Run Tap tests
