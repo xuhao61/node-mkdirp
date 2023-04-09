@@ -41,5 +41,3 @@ export const mkdirp = Object.assign(
     useNativeSync,
   }
 )
-
-export default mkdirp

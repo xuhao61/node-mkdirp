@@ -1,6 +1,6 @@
 import { mkdir, mkdirSync, statSync } from 'fs'
 import t from 'tap'
-import mkdirp from '../dist/cjs/src/index.js'
+import { mkdirp } from '../dist/cjs/src/index.js'
 import {
   MkdirpOptions,
   MkdirpOptionsResolved,

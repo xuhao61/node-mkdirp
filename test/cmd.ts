@@ -21,7 +21,7 @@ fakeMkdirp.mkdirp = fakeMkdirp
 if (process.argv[2] === 'RUN') {
   process.argv = [process.execPath, cmd, ...process.argv.slice(3)]
   t.mock(cmd, {
-    '../dist/cjs/src/index.js': fakeMkdirp,
+    '../dist/cjs/src/index.js': { mkdirp: fakeMkdirp },
     '../dist/cjs/package.json': {
       version: '4.2.0-69.lol',
     },

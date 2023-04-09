@@ -1,5 +1,9 @@
 # Changers Lorgs!
 
+## 3.0
+
+No default exports, just a named export.
+
 ## 2.1
 
 Export CommonJS module without a `.default` dangly wart. (A
