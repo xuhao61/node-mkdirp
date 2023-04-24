@@ -17,6 +17,11 @@ export const mkdirpSync = (path: string, opts?: MkdirpOptions) => {
     : mkdirpManualSync(path, resolved)
 }
 
+export const sync = mkdirpSync
+export const manual = mkdirpManual
+export const manualSync = mkdirpManualSync
+export const native = mkdirpNative
+export const nativeSync = mkdirpNativeSync
 export const mkdirp = Object.assign(
   async (path: string, opts?: MkdirpOptions) => {
     path = pathArg(path)
